@@ -16,6 +16,7 @@ export default function AppLayout({
                     <Link href="/dashboard">Dashboard</Link>
                     <Link href="/dashboard/notes">Notes</Link>
                     <Link href="/dashboard/workspaces">Workspaces</Link>
+                    <Link href="/dashboard/tags">Tags</Link>
                     <Link href="/dashboard/favorites">Favorites</Link>
                     <Link href="/dashboard/archive">Archive</Link>
                     <Link href="/dashboard/settings">Settings</Link>

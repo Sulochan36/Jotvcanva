@@ -21,6 +21,11 @@ export async function createNote(formData: FormData) {
         const content = formData.get("content") as string;
         const workspace = formData.get("workspace") as string;
         const theme = formData.get("theme") as string;
+        const tags =
+            (formData.get("tags") as string)
+                ?.split(",")
+                .map((tag) => tag.trim())
+                .filter(Boolean) || [];
 
         await Note.create({
             userId,
@@ -28,6 +33,7 @@ export async function createNote(formData: FormData) {
             content,
             workspace,
             theme,
+            tags,
             slug: title.toLowerCase().replace(/\s+/g, "-"),
         });
 
@@ -77,6 +83,11 @@ export async function updateNote(id: string, formData: FormData) {
             title: formData.get("title"),
             content: formData.get("content"),
             workspace: formData.get("workspace"),
+            tags:
+                (formData.get("tags") as string)
+                    ?.split(",")
+                    .map((tag) => tag.trim())
+                    .filter(Boolean) || [],
             theme: formData.get("theme"),
         });
 

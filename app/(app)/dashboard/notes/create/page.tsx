@@ -12,6 +12,8 @@ export default function CreateNotePage() {
             />
 
             <input name="workspace" placeholder="Workspace" className="border p-2" />
+            
+            <input name="tags" placeholder="react,nextjs,mongodb..." className="border p-2"/>
 
             <input name="theme" placeholder="Theme" className="border p-2" />
 

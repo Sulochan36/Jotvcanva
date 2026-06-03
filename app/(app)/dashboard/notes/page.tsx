@@ -37,7 +37,19 @@ export default async function NotesPage() {
                 {notes.map((note: any) => (
                     <div key={note._id} className="border p-4 rounded">
                         <h2>{note.title}</h2>
-                        <p>{note.workspace}</p>
+                        <p>📁 {note.workspace}</p>
+
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                            {note.tags.map((tag: string) => (
+                                <Link
+                                    key={tag}
+                                    href={`/dashboard/tags/${tag}`}
+                                    className="border px-2 py-1 rounded-full text-xs"
+                                >
+                                    #{tag}
+                                </Link>
+                            ))}
+                        </div>
 
                         <div className="flex gap-3 mt-4">
                             <Link href={`/dashboard/notes/${note._id}`}>
