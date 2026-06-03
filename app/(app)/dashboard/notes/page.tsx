@@ -6,11 +6,21 @@ import {
     toggleFavorite,
     archiveNote,
 } from "@/actions/note.actions";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function NotesPage() {
+
+    const { userId } = await auth();
+
+    if (!userId) {
+        return <div>Unauthorized</div>;
+    }
+
     await connectDB();
 
-    const notes = await Note.find();
+    const notes = await Note.find({
+        userId,
+    });
 
     return (
         <div className="p-8">

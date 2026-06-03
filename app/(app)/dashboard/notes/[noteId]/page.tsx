@@ -1,5 +1,6 @@
 import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
+import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 
 export default async function NotePage({params}: {params: { noteId: string };}) {
@@ -7,7 +8,16 @@ export default async function NotePage({params}: {params: { noteId: string };}) 
 
     await connectDB();
 
-    const note = await Note.findById(noteId);
+    const { userId } = await auth();
+
+    if (!userId) {
+        return <div>Unauthorized</div>;
+    }
+
+    const note = await Note.findOne({
+        _id: noteId,
+        userId,
+    });
 
     if (!note) return <div>Note not found</div>;
 

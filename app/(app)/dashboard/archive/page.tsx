@@ -1,13 +1,21 @@
 import Link from "next/link";
 import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function ArchivePage() {
     await connectDB();
 
+    const { userId } = await auth();
+
+    if (!userId) {
+        return <div>Unauthorized</div>;
+    }
+
     const archivedNotes = await Note.find({
+        userId,
         isArchived: true,
-    }).sort({ createdAt: -1 });
+    });
 
     return (
         <div>

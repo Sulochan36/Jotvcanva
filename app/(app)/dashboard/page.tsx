@@ -1,11 +1,20 @@
 import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function DashboardPage() {
     await connectDB();
 
-    const notes = await Note.find();
+    const { userId } = await auth();
+
+    if (!userId) {
+        return <div>Unauthorized</div>;
+    }
+
+    const notes = await Note.find({
+        userId,
+    });
 
     const totalNotes = notes.length;
     const favorites = notes.filter((note) => note.isFavorite).length;

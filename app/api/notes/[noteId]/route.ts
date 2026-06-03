@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
+import { auth } from "@clerk/nextjs/server";
 
 
 export async function GET(
@@ -12,7 +13,22 @@ export async function GET(
 
         const { noteId } = await params;
 
-        const note = await Note.findById(noteId);
+        const { userId } = await auth();
+
+        if (!userId) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Unauthorized",
+                },
+                { status: 401 }
+            );
+        }
+
+        const note = await Note.findOne({
+            _id: noteId,
+            userId,
+        });
 
         if (!note) {
             return NextResponse.json(
@@ -51,11 +67,38 @@ export async function PATCH(
 
         const body = await req.json();
 
-        const updatedNote = await Note.findByIdAndUpdate(
-            noteId,
+        const { userId } = await auth();
+
+        if (!userId) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Unauthorized",
+                },
+                { status: 401 }
+            );
+        }
+
+        const updatedNote = await Note.findOneAndUpdate(
+            {
+                _id: noteId,
+                userId,
+            },
             body,
-            { new: true }
+            {
+                new: true,
+            }
         );
+
+        if (!updatedNote) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Note not found",
+                },
+                { status: 404 }
+            );
+        }
 
         return NextResponse.json({
             success: true,
@@ -84,7 +127,32 @@ export async function DELETE(
 
         const { noteId } = await params;
 
-        await Note.findByIdAndDelete(noteId);
+        const { userId } = await auth();
+
+        if (!userId) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Unauthorized",
+                },
+                { status: 401 }
+            );
+        }
+
+        const deletedNote = await Note.findOneAndDelete({
+            _id: noteId,
+            userId,
+        });
+
+        if (!deletedNote) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Note not found",
+                },
+                { status: 404 }
+            );
+        }
 
         return NextResponse.json({
             success: true,

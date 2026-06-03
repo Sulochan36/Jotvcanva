@@ -1,7 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 
 const NoteSchema = new Schema(
+
     {
+        userId: {
+            type: String,
+            required: true,
+        },
         title: {
             type: String,
             required: true,

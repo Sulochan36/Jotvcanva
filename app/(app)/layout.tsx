@@ -1,4 +1,5 @@
 
+import { Show, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
 export default function AppLayout({
@@ -14,10 +15,15 @@ export default function AppLayout({
                 <nav className="flex flex-col gap-4">
                     <Link href="/dashboard">Dashboard</Link>
                     <Link href="/dashboard/notes">Notes</Link>
+                    <Link href="/dashboard/workspaces">Workspaces</Link>
                     <Link href="/dashboard/favorites">Favorites</Link>
                     <Link href="/dashboard/archive">Archive</Link>
                     <Link href="/dashboard/settings">Settings</Link>
                 </nav>
+
+                <Show when="signed-in">
+                    <UserButton />
+                </Show>
             </aside>
 
             <main className="flex-1 p-8">{children}</main>

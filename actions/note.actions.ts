@@ -2,10 +2,19 @@
 
 import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
+import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
+
+
 
 export async function createNote(formData: FormData) {
     try {
+        const { userId } = await auth();
+
+        if (!userId) {
+            throw new Error("Unauthorized");
+        }
+
         await connectDB();
 
         const title = formData.get("title") as string;
@@ -14,6 +23,7 @@ export async function createNote(formData: FormData) {
         const theme = formData.get("theme") as string;
 
         await Note.create({
+            userId,
             title,
             content,
             workspace,
@@ -30,9 +40,18 @@ export async function createNote(formData: FormData) {
 
 export async function deleteNote(id: string) {
     try {
+        const { userId } = await auth();
+
+        if (!userId) {
+            throw new Error("Unauthorized");
+        }
+
         await connectDB();
 
-        await Note.findByIdAndDelete(id);
+        await Note.findByIdAndDelete({
+            _id: id,
+            userId,
+        });
 
         revalidatePath("/dashboard/notes");
     } catch (error) {
@@ -43,9 +62,18 @@ export async function deleteNote(id: string) {
 
 export async function updateNote(id: string, formData: FormData) {
     try {
+        const { userId } = await auth();
+
+        if (!userId) {
+            throw new Error("Unauthorized");
+        }
+
         await connectDB();
 
-        await Note.findByIdAndUpdate(id, {
+        await Note.findByIdAndUpdate({
+            _id: id,
+            userId,
+        }, {
             title: formData.get("title"),
             content: formData.get("content"),
             workspace: formData.get("workspace"),
@@ -61,9 +89,18 @@ export async function updateNote(id: string, formData: FormData) {
 
 export async function toggleFavorite(id: string) {
     try {
+        const { userId } = await auth();
+
+        if (!userId) {
+            throw new Error("Unauthorized");
+        }
+
         await connectDB();
 
-        const note = await Note.findById(id);
+        const note = await Note.findById({
+            _id: id,
+            userId,
+        });
 
         if (!note) {
             throw new Error("Note not found");
@@ -81,9 +118,18 @@ export async function toggleFavorite(id: string) {
 
 export async function archiveNote(id: string) {
     try {
+        const { userId } = await auth();
+
+        if (!userId) {
+            throw new Error("Unauthorized");
+        }
+
         await connectDB();
 
-        const note = await Note.findById(id);
+        const note = await Note.findById({
+            _id: id,
+            userId,
+        });
 
         if (!note) {
             throw new Error("Note not found");

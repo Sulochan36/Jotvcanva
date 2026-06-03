@@ -1,6 +1,7 @@
 import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
 import { updateNote } from "@/actions/note.actions";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function EditPage({
     params,
@@ -11,7 +12,16 @@ export default async function EditPage({
 
     await connectDB();
 
-    const note = await Note.findById(noteId);
+    const { userId } = await auth();
+
+    if (!userId) {
+        return <div>Unauthorized</div>;
+    }
+
+    const note = await Note.findOne({
+        _id: noteId,
+        userId,
+    });
 
     if (!note) return <div>Note not found</div>;
 
