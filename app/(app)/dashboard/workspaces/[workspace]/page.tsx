@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
 import Link from "next/link";
+import NoteCard from "@/components/dashboard/NoteCard";
 
 export default async function WorkspacePage({
     params,
@@ -30,31 +31,19 @@ export default async function WorkspacePage({
                 📁 {workspace}
             </h1>
 
-            <div className="space-y-4">
+            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {notes.map((note: any) => (
-                    <div
-                        key={note._id}
-                        className="border rounded-lg p-4"
-                    >
-                        <Link
-                            href={`/dashboard/notes/${note._id}`}
-                        >
-                            <h2 className="font-semibold">
-                                {note.title}
-                            </h2>
-                        </Link>
-
-                        <div className="flex gap-2 mt-2 flex-wrap">
-                            {note.tags.map((tag: string) => (
-                                <span
-                                    key={tag}
-                                    className="border px-2 py-1 rounded-full text-sm"
-                                >
-                                    #{tag}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
+                    <NoteCard
+                        key={note._id.toString()}
+                        note={{
+                            _id: note._id.toString(),
+                            title: note.title,
+                            content: note.content,
+                            workspace: note.workspace,
+                            tags: note.tags,
+                            theme: note.theme,
+                        }}
+                    />
                 ))}
             </div>
         </div>

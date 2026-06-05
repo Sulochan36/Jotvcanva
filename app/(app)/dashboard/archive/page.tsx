@@ -2,6 +2,7 @@ import Link from "next/link";
 import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
 import { auth } from "@clerk/nextjs/server";
+import NoteCard from "@/components/dashboard/NoteCard";
 
 export default async function ArchivePage() {
     await connectDB();
@@ -30,23 +31,21 @@ export default async function ArchivePage() {
             {archivedNotes.length === 0 ? (
                 <p>No archived notes found.</p>
             ) : (
-                <div className="space-y-4">
-                    {archivedNotes.map((note: any) => (
-                        <Link
-                            key={note._id.toString()}
-                            href={`/dashboard/notes/${note._id}`}
-                            className="block border rounded p-4"
-                        >
-                            <h2 className="font-semibold text-lg">
-                                {note.title}
-                            </h2>
-
-                            <p className="text-sm text-gray-500">
-                                {note.workspace}
-                            </p>
-                        </Link>
-                    ))}
-                </div>
+                    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {archivedNotes.map((note: any) => (
+                            <NoteCard
+                                key={note._id.toString()}
+                                note={{
+                                    _id: note._id.toString(),
+                                    title: note.title,
+                                    content: note.content,
+                                    workspace: note.workspace,
+                                    tags: note.tags,
+                                    theme: note.theme,
+                                }}
+                            />
+                        ))}
+                    </div>
             )}
         </div>
     );

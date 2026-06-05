@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
 import Link from "next/link";
+import NoteCard from "@/components/dashboard/NoteCard";
 
 export default async function TagPage({
     params,
@@ -30,24 +31,19 @@ export default async function TagPage({
                 #{tag}
             </h1>
 
-            <div className="space-y-4">
+            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {notes.map((note: any) => (
-                    <div
-                        key={note._id}
-                        className="border rounded-lg p-4"
-                    >
-                        <Link
-                            href={`/dashboard/notes/${note._id}`}
-                        >
-                            <h2 className="font-semibold">
-                                {note.title}
-                            </h2>
-                        </Link>
-
-                        <p className="text-sm">
-                            📁 {note.workspace}
-                        </p>
-                    </div>
+                    <NoteCard
+                        key={note._id.toString()}
+                        note={{
+                            _id: note._id.toString(),
+                            title: note.title,
+                            content: note.content,
+                            workspace: note.workspace,
+                            tags: note.tags,
+                            theme: note.theme,
+                        }}
+                    />
                 ))}
             </div>
         </div>

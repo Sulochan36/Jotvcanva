@@ -49,6 +49,12 @@ export default async function EditPage({
             />
 
             <input
+                name="tags"
+                defaultValue={note.tags.join(",")}
+                className="border p-2"
+            />
+
+            <input
                 name="theme"
                 defaultValue={note.theme}
                 className="border p-2"

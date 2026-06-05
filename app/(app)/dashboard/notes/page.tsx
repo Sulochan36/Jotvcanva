@@ -7,6 +7,7 @@ import {
     archiveNote,
 } from "@/actions/note.actions";
 import { auth } from "@clerk/nextjs/server";
+import NoteCard from "@/components/dashboard/NoteCard";
 
 export default async function NotesPage() {
 
@@ -33,42 +34,19 @@ export default async function NotesPage() {
                 Create Note
             </Link>
 
-            <div className="mt-6 space-y-4">
+            <div className="mt-6 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {notes.map((note: any) => (
-                    <div key={note._id} className="border p-4 rounded">
-                        <h2>{note.title}</h2>
-                        <p>📁 {note.workspace}</p>
-
-                        <div className="flex gap-2 mt-2 flex-wrap">
-                            {note.tags.map((tag: string) => (
-                                <Link
-                                    key={tag}
-                                    href={`/dashboard/tags/${tag}`}
-                                    className="border px-2 py-1 rounded-full text-xs"
-                                >
-                                    #{tag}
-                                </Link>
-                            ))}
-                        </div>
-
-                        <div className="flex gap-3 mt-4">
-                            <Link href={`/dashboard/notes/${note._id}`}>
-                                View
-                            </Link>
-
-                            <form action={toggleFavorite.bind(null, note._id.toString())}>
-                                <button>Favorite</button>
-                            </form>
-
-                            <form action={archiveNote.bind(null, note._id.toString())}>
-                                <button>Archive</button>
-                            </form>
-
-                            <form action={deleteNote.bind(null, note._id.toString())}>
-                                <button className="text-red-500">Delete</button>
-                            </form>
-                        </div>
-                    </div>
+                    <NoteCard
+                        key={note._id.toString()}
+                        note={{
+                            _id: note._id.toString(),
+                            title: note.title,
+                            content: note.content,
+                            workspace: note.workspace,
+                            tags: note.tags,
+                            theme: note.theme,
+                        }}
+                    />
                 ))}
             </div>
         </div>

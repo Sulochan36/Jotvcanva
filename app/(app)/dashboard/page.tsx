@@ -2,6 +2,10 @@ import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
+import Header from "@/components/dashboard/Header";
+import StatsCard from "@/components/dashboard/StatsCard";
+import NoteCard from "@/components/dashboard/NoteCard";
+import WorkspaceCard from "@/components/dashboard/WorkspaceCard";
 
 export default async function DashboardPage() {
     await connectDB();
@@ -19,11 +23,14 @@ export default async function DashboardPage() {
     const totalNotes = notes.length;
     const favorites = notes.filter((note) => note.isFavorite).length;
     const archived = notes.filter((note) => note.isArchived).length;
+    const workspaces = [...new Set(notes.map((note) => note.workspace))];
+
+    const tags = [...new Set(notes.flatMap((note) => note.tags)),];
 
     return (
         <div>
             <div className="flex justify-between items-center mb-8">
-                <h1 className="text-3xl font-bold">Dashboard</h1>
+                <Header/>
 
                 <Link
                     href="/dashboard/notes/create"
@@ -33,21 +40,26 @@ export default async function DashboardPage() {
                 </Link>
             </div>
 
-            <div className="grid grid-cols-3 gap-6 mb-10">
-                <div className="border rounded p-4">
-                    <h2 className="text-lg font-semibold">Total Notes</h2>
-                    <p className="text-2xl">{totalNotes}</p>
-                </div>
+            <div className="grid md:grid-cols-4 gap-6 mb-10">
+                <StatsCard
+                    title="Notes"
+                    value={totalNotes}
+                />
 
-                <div className="border rounded p-4">
-                    <h2 className="text-lg font-semibold">Favorites</h2>
-                    <p className="text-2xl">{favorites}</p>
-                </div>
+                <StatsCard
+                    title="Favorites"
+                    value={favorites}
+                />
 
-                <div className="border rounded p-4">
-                    <h2 className="text-lg font-semibold">Archived</h2>
-                    <p className="text-2xl">{archived}</p>
-                </div>
+                <StatsCard
+                    title="Archived"
+                    value={archived}
+                />
+
+                <StatsCard
+                    title="Workspaces"
+                    value={workspaces.length}
+                />
             </div>
 
             <div>
@@ -56,20 +68,61 @@ export default async function DashboardPage() {
                 </h2>
 
                 <div className="grid gap-4">
-                    {notes.slice(0, 5).map((note) => (
+                    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {notes.slice(0, 6).map((note) => (
+                            <NoteCard
+                                key={note._id.toString()}
+                                note={{
+                                    ...note.toObject(),
+                                    _id: note._id.toString(),
+                                }}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            <section className="mt-12">
+                <h2 className="text-2xl font-semibold mb-4">
+                    Workspaces
+                </h2>
+
+                <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+                    {workspaces.map((workspace) => {
+                        const count = notes.filter(
+                            (note) =>
+                                note.workspace === workspace
+                        ).length;
+
+                        return (
+                            <WorkspaceCard
+                                key={workspace}
+                                workspace={workspace}
+                                count={count}
+                            />
+                        );
+                    })}
+                </div>
+            </section>
+
+
+            <section className="mt-12">
+                <h2 className="text-2xl font-semibold mb-4">
+                    Popular Tags
+                </h2>
+
+                <div className="flex flex-wrap gap-3">
+                    {tags.map((tag) => (
                         <Link
-                            key={note._id.toString()}
-                            href={`/dashboard/notes/${note._id}`}
-                            className="border rounded p-4 block"
+                            key={tag}
+                            href={`/dashboard/tags/${tag}`}
+                            className="border rounded-full px-3 py-2"
                         >
-                            <h3 className="font-semibold">{note.title}</h3>
-                            <p className="text-sm text-gray-600">
-                                {note.workspace}
-                            </p>
+                            #{tag}
                         </Link>
                     ))}
                 </div>
-            </div>
+            </section>
         </div>
     );
 }
