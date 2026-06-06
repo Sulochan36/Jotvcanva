@@ -1,10 +1,17 @@
-import React from 'react'
-import page from '../page'
+import Hero from "@/components/landing/Hero";
+import LogoStrip from "@/components/landing/LogoStrip";
+import Features from "@/components/landing/Features";
+import Showcase from "@/components/landing/Showcase";
+import CTA from "@/components/landing/CTA";
 
-const Marketing = () => {
+export default function HomePage() {
     return (
-        <div>Marketing</div>
-    )
+        <>
+            <Hero />
+            <LogoStrip />
+            <Features />
+            <Showcase />
+            <CTA />
+        </>
+    );
 }
-
-export default Marketing
