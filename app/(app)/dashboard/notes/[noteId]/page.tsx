@@ -2,6 +2,7 @@ import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
+import { FiEdit2, FiShare2 } from "react-icons/fi";
 
 export default async function NotePage({
     params,
@@ -28,54 +29,88 @@ export default async function NotePage({
     }
 
     return (
-        <div className="max-w-4xl mx-auto p-8">
-            <div className="border rounded-3xl p-8">
-                <div className="flex items-center gap-3 mb-4">
-                    <span className="text-sm border rounded-full px-3 py-1">
-                        📁 {note.workspace}
-                    </span>
+        <div className="max-w-5xl mx-auto px-6 py-10">
 
-                    <span className="text-sm border rounded-full px-3 py-1">
-                        {note.theme}
-                    </span>
+            {/* Header */}
+
+            <div className="flex items-center justify-between mb-10">
+
+                <div className="flex items-center gap-3 text-sm text-zinc-500">
+                    <Link href="/dashboard/workspaces">
+                        Workspaces
+                    </Link>
+
+                    <span>›</span>
+
+                    <Link href={`/dashboard/workspaces/${note.workspace}`}>
+                        {note.workspace}
+                    </Link>
                 </div>
 
-                <h1 className="text-4xl font-bold mb-4">
+                <div className="flex items-center gap-3">
+
+                    <Link
+                        href={`/dashboard/notes/${note._id}/edit`}
+                        className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#111111] px-4 py-2 text-sm hover:border-violet-500/40"
+                    >
+                        <FiEdit2 />
+                        Edit
+                    </Link>
+
+                    <Link
+                        href={`/share/${note.slug}`}
+                        className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#111111] px-4 py-2 text-sm hover:border-violet-500/40"
+                    >
+                        <FiShare2 />
+                        Share
+                    </Link>
+
+                </div>
+
+            </div>
+
+            {/* Note */}
+
+            <article className="rounded-3xl border border-white/10 bg-[#111111] p-8 lg:p-12">
+
+                <div className="flex flex-wrap items-center gap-3 mb-6">
+
+                    <span className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-wider text-zinc-400">
+                        Note
+                    </span>
+
+                    <span className="text-sm text-zinc-500">
+                        {new Date(
+                            note.createdAt
+                        ).toLocaleDateString()}
+                    </span>
+
+                </div>
+
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
                     {note.title}
                 </h1>
 
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-10">
                     {note.tags.map((tag: string) => (
                         <Link
                             key={tag}
                             href={`/dashboard/tags/${tag}`}
-                            className="border rounded-full px-3 py-1 text-sm"
+                            className="rounded-full border border-white/10 px-3 py-1 text-sm text-zinc-400 hover:border-violet-500/40 hover:text-violet-300 transition"
                         >
                             #{tag}
                         </Link>
                     ))}
                 </div>
 
-                <div className="prose max-w-none">
-                    <p>{note.content}</p>
+                <div className="h-px bg-white/10 mb-10" />
+
+                <div className="max-w-none text-zinc-300 leading-8 text-lg whitespace-pre-wrap">
+                    {note.content}
                 </div>
 
-                <div className="flex gap-4 mt-8">
-                    <Link
-                        href={`/dashboard/notes/${note._id}/edit`}
-                        className="border px-4 py-2 rounded"
-                    >
-                        Edit
-                    </Link>
+            </article>
 
-                    <Link
-                        href={`/share/${note.slug}`}
-                        className="border px-4 py-2 rounded"
-                    >
-                        Share
-                    </Link>
-                </div>
-            </div>
         </div>
     );
 }

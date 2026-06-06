@@ -1,5 +1,5 @@
 'use client';
-import { Show, UserButton } from "@clerk/nextjs";
+import { Show, UserButton,useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -50,6 +50,7 @@ const navItems = [
 ];
 
 const Sidebar = () => {
+    const { user } = useUser();
     const pathname = usePathname();
 
     const [collapsed, setCollapsed] = useState(false);
@@ -78,40 +79,32 @@ const Sidebar = () => {
             {/* Sidebar */}
 
             <aside
-                className={`top-0 left-0 h-screen border-r transition-all duration-300 ${collapsed ? "w-20" : "w-72"}
-                        ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
+                className={`fixed md:sticky top-0 left-0 z-40 h-screen bg-[#0d0d0d] border-r border-white/10 transition-all duration-300 flex flex-col ${collapsed ? "w-20" : "w-72"} ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
             >
-                <div className="flex items-center justify-between p-4 border-b">
+                <div className="flex items-center justify-between px-5 py-5 border-b border-white/10">
                     {!collapsed && (
-                        <div>
-                            <Link href='/'>
-                            <div className="flex items-center gap-2">
-                                    <p className='text-md font-bold text-gray-500 rounded-full border bg-neutral-900 p-2'>
-                                        JC
-                                    </p>
-                                    <h1 className="font-bold text-xl">
-                                        JotCanva
-                                    </h1>
+                        <Link href="/" className="flex items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-600 font-bold text-white">
+                                JC
                             </div>
-                                
-                            </Link>
-                            
 
-                            <p className="text-xs text-gray-500">
-                                Visual Workspace
-                            </p>
-                        </div>
+                            <div>
+                                <h2 className="font-semibold text-white">
+                                    JotCanva
+                                </h2>
+
+                                <p className="text-xs text-zinc-500">
+                                    Visual Workspace
+                                </p>
+                            </div>
+                        </Link>
                     )}
 
                     <button
                         onClick={() => setCollapsed(!collapsed)}
-                        className="hidden md:block"
+                        className="hidden md:flex h-8 w-8 items-center justify-center rounded-lg hover:bg-white/5"
                     >
-                        {collapsed ? (
-                            <FiChevronRight />
-                        ) : (
-                            <FiChevronLeft />
-                        )}
+                        {collapsed ? <FiChevronRight /> : <FiChevronLeft />}
                     </button>
 
                     <button
@@ -122,23 +115,23 @@ const Sidebar = () => {
                     </button>
                 </div>
 
-                <nav className="p-3 space-y-2">
+                <nav className="flex-1 p-4 space-y-2">
                     {navItems.map((item) => {
                         const Icon = item.icon;
 
-                        const isActive = pathname === item.href;
+                        const isActive =
+                            pathname === item.href;
 
                         return (
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className={`flex items-center gap-3 rounded-lg px-3 py-3 transition
-                                ${isActive ? "bg-black text-white" : "hover:bg-neutral-500"}`}
+                                className={`group flex items-center gap-3 rounded-2xl px-4 py-3 transition-all ${isActive ? "bg-violet-600 text-white shadow-lg shadow-violet-600/20" : "text-zinc-400 hover:bg-white/5 hover:text-white"}`}
                             >
-                                <Icon size={20} />
+                                <Icon size={18} />
 
                                 {!collapsed && (
-                                    <span>
+                                    <span className="font-medium">
                                         {item.label}
                                     </span>
                                 )}
@@ -147,9 +140,25 @@ const Sidebar = () => {
                     })}
                 </nav>
 
-                <div className="absolute bottom-6 left-0 w-full px-3">
+                <div className="border-t border-white/10 p-4">
                     <Show when="signed-in">
-                        <UserButton />
+                        <div className={`flex items-center ${collapsed ? "justify-center" : "gap-3"}`}>
+
+                            <UserButton />
+
+                            {!collapsed && (
+                                <div className="overflow-hidden">
+                                    <p className="text-sm font-medium text-white truncate">
+                                        {user?.fullName || user?.firstName}
+                                    </p>
+
+                                    <p className="text-xs text-zinc-500 truncate">
+                                        {user?.primaryEmailAddress?.emailAddress}
+                                    </p>
+                                </div>
+                            )}
+
+                        </div>
                     </Show>
                 </div>
             </aside>
