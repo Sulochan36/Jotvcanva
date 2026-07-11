@@ -1,3 +1,9 @@
+import {
+    FileText,
+    Star,
+    Archive,
+    LayoutGrid,
+} from "lucide-react";
 
 import StatsCard from "./StatsCard";
 
@@ -15,11 +21,33 @@ export default function StatsGrid({
     workspaces,
 }: Props) {
     return (
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            <StatsCard title="Total Notes" value={totalNotes} />
-            <StatsCard title="Favorites" value={favorites} />
-            <StatsCard title="Archived" value={archived} />
-            <StatsCard title="Workspaces" value={workspaces} />
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+
+            <StatsCard
+                title="Total Notes"
+                value={totalNotes}
+                icon={FileText}
+                badge="+4 this week"
+            />
+
+            <StatsCard
+                title="Favorites"
+                value={favorites}
+                icon={Star}
+            />
+
+            <StatsCard
+                title="Archived"
+                value={archived}
+                icon={Archive}
+            />
+
+            <StatsCard
+                title="Workspaces"
+                value={workspaces}
+                icon={LayoutGrid}
+            />
+
         </div>
     );
 }

@@ -30,19 +30,25 @@ export default function HeroBanner() {
                     Your creative workspace is ready.
                 </p>
 
-                <div className="mt-8 flex gap-4">
-                    <Link href="/dashboard/notes/create" className="rounded-xl bg-violet-400 px-5 py-3 font-medium text-black transition hover:scale-105">
+                <div className="mt-10 flex flex-wrap gap-4">
+
+                    <Link
+                        href="/dashboard/notes/create"
+                        className="inline-flex items-center gap-2 rounded-2xl bg-[#b4abff] px-6 py-3 font-semibold text-black transition hover:scale-[1.03]"
+                    >
+                        +
                         Create Note
                     </Link>
 
-                    <button className="rounded-xl border border-white/10 px-5 py-3 text-white">
+                    <button className="rounded-2xl border border-white/10 bg-white/[0.02] px-6 py-3 text-white transition hover:border-[#b4abff]/40 hover:bg-white/[0.04]">
                         Quick Workspace
                     </button>
+
                 </div>
             </div>
 
             <div className="absolute right-10 top-1/2 hidden -translate-y-1/2 text-[250px] font-black text-violet-500/10 lg:block">
-                ✦📝
+                {greeting=="Evening" ? "🌚" : greeting=="Afternoon"? "☀️" : "🌞"}📝
             </div>
         </div>
     );

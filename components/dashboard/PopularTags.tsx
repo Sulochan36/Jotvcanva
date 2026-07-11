@@ -8,22 +8,26 @@ export default function PopularTags({
     tags,
 }: Props) {
     return (
-        <div className="rounded-2xl border border-white/10 bg-[#0f1014] p-5">
-            <h3 className="mb-4 font-semibold text-white">
+        <div className="rounded-3xl border border-white/10 bg-[#111111] p-6">
+
+            <h3 className="mb-6 text-lg font-semibold text-white">
                 Popular Tags
             </h3>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
+
                 {tags.map((tag) => (
                     <Link
                         key={tag}
                         href={`/dashboard/tags/${tag}`}
-                        className="rounded-full border border-white/10 px-3 py-1 text-xs text-zinc-400"
+                        className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-zinc-400 transition hover:border-[#b4abff]/40 hover:text-white"
                     >
                         #{tag}
                     </Link>
                 ))}
+
             </div>
+
         </div>
     );
 }

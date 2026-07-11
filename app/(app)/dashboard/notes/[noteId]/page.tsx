@@ -2,13 +2,16 @@ import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
-import { FiEdit2, FiShare2 } from "react-icons/fi";
+import {
+    FiArrowLeft,
+    FiEdit2,
+    FiShare2,
+    FiFolder,
+    FiCalendar,
+    FiTag,
+} from "react-icons/fi";
 
-export default async function NotePage({
-    params,
-}: {
-    params: Promise<{ noteId: string }>;
-}) {
+export default async function NotePage({ params}: {params: Promise<{ noteId: string }>}) {
     const { noteId } = await params;
 
     await connectDB();
@@ -29,29 +32,22 @@ export default async function NotePage({
     }
 
     return (
-        <div className="max-w-5xl mx-auto px-6 py-10">
+        <div className="min-h-screen bg-[#0b0b0d] text-white">
 
-            {/* Header */}
+            {/* Toolbar */}
 
-            <div className="flex items-center justify-between mb-10">
+            <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-white/10 bg-[#0b0b0d]/90 px-8 backdrop-blur-xl">
 
-                <div className="flex items-center gap-3 text-sm text-zinc-500">
-                    <Link href="/dashboard/workspaces">
-                        Workspaces
-                    </Link>
-
-                    <span>›</span>
-
-                    <Link href={`/dashboard/workspaces/${note.workspace}`}>
-                        {note.workspace}
-                    </Link>
-                </div>
+                <Link href="/dashboard/notes" className="flex items-center gap-2 text-sm text-neutral-400 transition hover:text-white">
+                    <FiArrowLeft />
+                    Back
+                </Link>
 
                 <div className="flex items-center gap-3">
 
                     <Link
                         href={`/dashboard/notes/${note._id}/edit`}
-                        className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#111111] px-4 py-2 text-sm hover:border-violet-500/40"
+                        className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#141416] px-4 py-2 text-sm transition hover:border-violet-500/40"
                     >
                         <FiEdit2 />
                         Edit
@@ -59,7 +55,7 @@ export default async function NotePage({
 
                     <Link
                         href={`/share/${note.slug}`}
-                        className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#111111] px-4 py-2 text-sm hover:border-violet-500/40"
+                        className="flex items-center gap-2 rounded-xl bg-[#b4abff] px-5 py-2 text-sm font-medium text-black transition hover:opacity-90"
                     >
                         <FiShare2 />
                         Share
@@ -67,49 +63,66 @@ export default async function NotePage({
 
                 </div>
 
-            </div>
+            </header>
 
-            {/* Note */}
+            <main className="mx-auto max-w-4xl px-8 py-14">
 
-            <article className="rounded-3xl border border-white/10 bg-[#111111] p-8 lg:p-12">
+                {/* Metadata */}
 
-                <div className="flex flex-wrap items-center gap-3 mb-6">
+                <div className="mb-10 flex flex-wrap items-center gap-6 text-sm text-neutral-500">
 
-                    <span className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-wider text-zinc-400">
-                        Note
-                    </span>
+                    <div className="flex items-center gap-2">
+                        <FiFolder />
+                        <Link href={`/dashboard/workspaces/${note.workspace}`} className="hover:text-white transition">
+                            {note.workspace}
+                        </Link>
+                    </div>
 
-                    <span className="text-sm text-zinc-500">
-                        {new Date(
-                            note.createdAt
-                        ).toLocaleDateString()}
-                    </span>
+                    <div className="flex items-center gap-2">
+                        <FiCalendar />
+                        {new Date(note.createdAt).toLocaleDateString()}
+                    </div>
+
+                    <div className="rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-1 text-xs capitalize text-violet-300">
+                        {note.theme}
+                    </div>
 
                 </div>
 
-                <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                {/* Title */}
+
+                <h1 className="mb-8 text-5xl font-bold tracking-tight">
                     {note.title}
                 </h1>
 
-                <div className="flex flex-wrap gap-2 mb-10">
-                    {note.tags.map((tag: string) => (
-                        <Link
-                            key={tag}
-                            href={`/dashboard/tags/${tag}`}
-                            className="rounded-full border border-white/10 px-3 py-1 text-sm text-zinc-400 hover:border-violet-500/40 hover:text-violet-300 transition"
-                        >
-                            #{tag}
-                        </Link>
-                    ))}
-                </div>
+                {/* Tags */}
 
-                <div className="h-px bg-white/10 mb-10" />
+                {note.tags.length > 0 && (
+                    <div className="mb-10 flex flex-wrap gap-3">
 
-                <div className="max-w-none text-zinc-300 leading-8 text-lg whitespace-pre-wrap">
+                        {note.tags.map((tag: string) => (
+                            <Link
+                                key={tag}
+                                href={`/dashboard/tags/${tag}`}
+                                className="flex items-center gap-2 rounded-full border border-white/10 bg-[#141416] px-4 py-2 text-sm text-neutral-300 transition hover:border-violet-500/40 hover:text-violet-300"
+                            >
+                                <FiTag size={13} />
+                                {tag}
+                            </Link>
+                        ))}
+
+                    </div>
+                )}
+
+                <div className="mb-10 h-px bg-white/10" />
+
+                {/* Content */}
+
+                <article className="whitespace-pre-wrap text-lg leading-9 text-neutral-300">
                     {note.content}
-                </div>
+                </article>
 
-            </article>
+            </main>
 
         </div>
     );

@@ -42,17 +42,9 @@ export default async function DashboardPage() {
     }))
 
     return (
-        <div>
-            <div className="mb-8">
+        <div className="space-y-10 p-8">
                 <HeroBanner/>
 
-                <Link
-                    href="/dashboard/notes/create"
-                    className="bg-black text-white px-4 py-2 rounded"
-                >
-                    Create Note
-                </Link>
-            </div>
 
             <StatsGrid
                 totalNotes={totalNotes}
@@ -61,7 +53,7 @@ export default async function DashboardPage() {
                 workspaces={workspaces.length}
             />
 
-            <div className="grid gap-6 xl:grid-cols-[2fr_1fr]">
+            <div className="grid gap-10 xl:grid-cols-[2.2fr_1fr]">
 
                 <RecentNotes notes={recentNotes} />
 

@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { connectDB } from "@/lib/db";
 import Note from "@/models/note.model";
 import Link from "next/link";
-import NoteCard from "@/components/dashboard/NoteCard";
+import NoteCard from "@/components/notes/NoteCard";
 
 export default async function WorkspacePage({
     params,

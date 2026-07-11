@@ -1,25 +1,52 @@
+import { auth } from "@clerk/nextjs/server";
+import { connectDB } from "@/lib/db";
+import Note from "@/models/note.model";
 import { createNote } from "@/actions/note.actions";
+import NoteMetadata from "./NoteMetadata";
+import EditorToolbar from "./EditorToolbar";
+import TitleInput from "./TitleInput";
+import ContentEditor from "./ContentEditor";
+import Workspace from '@/models/workspace.model'
 
-export default function CreateNotePage() {
+
+export default async function CreateNotePage() {
+    const { userId } = await auth();
+
+    if (!userId) {
+        return <div>Unauthorized</div>;
+    }
+
+    await connectDB();
+
+    const workspaces = (await Workspace.find({ userId })).map((workspace) => ({
+        _id: workspace._id.toString(),
+        name: workspace.name,
+    }));
+
+    const hasGeneral = workspaces.some(
+        (workspace) => workspace.name === "General"
+    );
+
+    if (!hasGeneral) {
+        workspaces.unshift({
+            _id: "general",
+            name: "General",
+        } as any);
+    }
+
     return (
-        <form action={createNote} className="flex flex-col gap-4 p-8">
-            <input name="title" placeholder="Title" className="border p-2" />
+        <form action={createNote}>
 
-            <textarea
-                name="content"
-                placeholder="Content"
-                className="border p-2"
-            />
+            <EditorToolbar />
 
-            <input name="workspace" placeholder="Workspace" className="border p-2" />
-            
-            <input name="tags" placeholder="react,nextjs,mongodb..." className="border p-2"/>
+            <main className="mx-auto max-w-5xl px-8 py-12">
 
-            <input name="theme" placeholder="Theme" className="border p-2" />
+                <NoteMetadata workspaces={workspaces} />
+                <TitleInput />
+                <ContentEditor />
 
-            <button className="bg-black text-white p-2 rounded">
-                Create Note
-            </button>
+            </main>
+
         </form>
     );
 }

@@ -20,7 +20,7 @@ export async function createNote(formData: FormData) {
         const title = formData.get("title") as string;
         const content = formData.get("content") as string;
         const workspace = formData.get("workspace") as string;
-        const theme = formData.get("theme") as string;
+        const theme = (formData.get("theme") as string) || "aurora";
         const tags =
             (formData.get("tags") as string)
                 ?.split(",")
@@ -34,7 +34,7 @@ export async function createNote(formData: FormData) {
             workspace,
             theme,
             tags,
-            slug: title.toLowerCase().replace(/\s+/g, "-"),
+            slug: `${title.toLowerCase().replace(/\s+/g, "-")}-${Date.now()}`,
         });
 
         revalidatePath("/dashboard/notes");
