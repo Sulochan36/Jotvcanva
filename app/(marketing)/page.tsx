@@ -9,8 +9,13 @@ export default function HomePage() {
         <>
             <Hero />
             <LogoStrip />
-            <Features />
-            <Showcase />
+            <section id="features">
+                <Features />
+            </section>
+
+            <section id="showcase">
+                <Showcase />
+            </section>
             <CTA />
         </>
     );
