@@ -82,7 +82,7 @@ export default function Hero() {
 
                 {/* Floating Dashboard */}
 
-                <div className="relative mx-auto mt-24 max-w-6xl">
+                <div className="relative mx-auto mt-16 max-w-7xl -translate-y-6">
 
                     <div className="absolute -top-12 left-12 rounded-2xl border border-white/10 bg-[#0f0f12]/90 px-6 py-4 shadow-2xl backdrop-blur-xl">
 
@@ -108,13 +108,17 @@ export default function Hero() {
 
                     </div>
 
-                    <div className="overflow-hidden rounded-[40px] border border-white/10 bg-[#0d0d10] p-5 shadow-[0_40px_120px_rgba(0,0,0,0.7)]">
+                    <div className="relative overflow-hidden rounded-[40px] border border-white/10 bg-[#0d0d10] p-5 shadow-[0_40px_120px_rgba(0,0,0,0.7)]">
 
                         <img
                             src="/dashboard-preview.png"
                             alt="Dashboard"
                             className="rounded-3xl"
                         />
+
+                        {/* Bottom Fade */}
+
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-linear-to-t from-[#050505] via-[#050505]/75 to-transparent" />
 
                     </div>
 

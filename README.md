@@ -1,131 +1,354 @@
-# JotCanva
+# ✨ JotCanva
 
-A modern note-taking and knowledge management workspace built with Next.js, Clerk Authentication, MongoDB, and Server Actions.
+<p align="center">
+  <img src="./public/logo.png" alt="JotCanva Logo" width="120"/>
+</p>
 
----
+<h3 align="center">
+A modern note-taking workspace built for creators, developers, students and thinkers.
+</h3>
 
-## Live Demo
-
-**Live URL:** [[JotCanva](https://jotcanva.sulochanmahajan.com/)]
-
-**GitHub Repository:** [[Repository](https://github.com/Sulochan36/Jotvcanva)]
-
----
-
-# Project Overview
-
-JotCanva is a personal knowledge management platform designed to help users capture ideas, organize notes into workspaces, manage tags, archive information, and build a digital second brain.
-
-The application focuses on providing a clean writing experience while demonstrating modern Next.js App Router concepts such as Server Components, Server Actions, Authentication, Route Handlers, Dynamic Routing, and MongoDB integration.
-
-Users can securely create and manage their own notes with authentication handled through Clerk.
+<p align="center">
+Capture ideas • Organize knowledge • Jot it down
+</p>
 
 ---
 
-# Tech Stack
+## 📖 Overview
 
-### Frontend
+JotCanva is a modern full-stack note-taking platform inspired by tools like Notion, Obsidian, Apple Notes, and Craft Docs.
 
-* Next.js 15
-* React 19
-* TypeScript
-* Tailwind CSS
+The goal of this project was not simply to create another CRUD notes application, but to build a structured digital workspace where users can organize ideas into workspaces, categorize knowledge with tags, favorite important notes, archive old content, and manage everything from a beautiful modern dashboard.
 
-### Backend
+The application focuses on:
 
-* Next.js Route Handlers
-* Server Actions
+-  Writing without distractions
+-  Organizing notes into workspaces
+-  Tag-based categorization
+-  Quick access to favorite notes
+-  Archiving old notes
+-  Modern premium UI
+-  Secure authentication
 
-### Database
-
-* MongoDB
-* Mongoose
-
-### Authentication
-
-* Clerk
-
-### Deployment
-
-* Vercel
+The project demonstrates production-level architecture using the latest Next.js App Router, Server Actions, MongoDB, Clerk Authentication, and reusable component-driven UI.
 
 ---
 
-# Features Implemented
+# 🚀 Live Demo
 
-### Authentication
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Now-8B5CF6?style=for-the-badge)](https://jotcanva.sulochanmahajan.com/)
 
-* User Sign Up
-* User Sign In
-* User Session Management
-* Protected Dashboard Routes
-* User-specific Notes
-
-### Notes Management
-
-* Create Notes
-* Read Notes
-* Update Notes
-* Delete Notes
-
-### Organization
-
-* Workspaces
-* Tags
-* Favorites
-* Archive Notes
-
-### Dashboard
-
-* Statistics Overview
-* Recent Notes Section
-* Workspace Overview
-* Popular Tags
-
-### API
-
-* REST API Endpoints
-* Dynamic Note Routes
-
-### UI
-
-* Responsive Dashboard
-* Responsive Sidebar
-* Dark Theme Interface
-* Empty State Screens
 
 ---
 
-# Folder Structure
+# 📸 Preview
 
-```txt
-app/
+![Jotcanva Landing](image.png)
+![Jotcanva Dashboard](image-1.png)
+---
+
+# ✨ Features
+
+## Authentication
+
+- Clerk Authentication
+- Secure Sign Up
+- Secure Sign In
+- User Sessions
+- Protected Routes
+
+---
+
+## Notes
+
+- Create Notes
+- Read Notes
+- Update Notes
+- Delete Notes
+- Rich Editor Layout
+- Modern Writing Interface
+
+---
+
+## Workspaces
+
+- Create Multiple Workspaces
+- Organize Notes
+- Workspace Dashboard
+- Workspace Statistics
+
+---
+
+## Tags
+
+- Multiple Tags
+- Tag Filtering
+- Dedicated Tag Pages
+- Organized Knowledge
+
+---
+
+## Favorites
+
+- Mark Notes as Favorite
+- Dedicated Favorites Page
+
+---
+
+## Archive
+
+- Archive Notes
+- Restore Archived Notes
+- Separate Archive View
+
+---
+
+## Dashboard
+
+Interactive Dashboard containing
+
+- Hero Section
+- Statistics Cards
+- Recent Notes
+- Workspace Overview
+- Popular Tags
+
+---
+
+## Landing Page
+
+Modern SaaS inspired landing page featuring
+
+- Premium Hero Section
+- Feature Showcase
+- Dashboard Preview
+- Responsive Design
+- Modern Animations
+- CTA Section
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+- Lucide React
+- React Icons
+
+---
+
+## Backend
+
+- Next.js Server Actions
+- MongoDB
+- Mongoose
+
+---
+
+## Authentication
+
+- Clerk
+
+---
+
+## Database
+
+MongoDB Atlas
+
+---
+
+## Deployment
+
+Vercel 
+
+---
+
+# 🧠 Project Architecture
+
+```
+app
+│
+├── (landing)
+│
 ├── (app)
 │   ├── dashboard
+│   ├── notes
+│   ├── workspaces
 │   ├── archive
 │   ├── favorites
-│   ├── workspaces
-│   ├── tags
-│   └── notes
+│   └── tags
 │
-├── (auth)
-│   ├── sign-in
-│   └── sign-up
+├── actions
 │
-├── api
-│   └── notes
+├── components
 │
-actions/
-components/
-lib/
-models/
+├── lib
+│
+├── models
+│
+└── middleware
 ```
 
 ---
 
-# Environment Variables
+# 📂 Folder Structure
 
-Create a `.env.local` file in the root directory.
+```
+app/
+components/
+actions/
+lib/
+models/
+middleware.ts
+public/
+```
+
+---
+
+# ⚡ Database Models
+
+## Note
+
+- title
+- content
+- workspace
+- tags
+- theme
+- slug
+- isFavorite
+- isArchived
+- userId
+- timestamps
+
+---
+
+## Workspace
+
+- name
+- description
+- color
+- userId
+- timestamps
+
+---
+
+# 🔥 Current Functionalities
+
+✅ Authentication
+
+✅ Dashboard
+
+✅ CRUD Notes
+
+✅ Workspaces
+
+✅ Tags
+
+✅ Favorites
+
+✅ Archive
+
+✅ Responsive UI
+
+✅ Protected Routes
+
+---
+
+# ⚙️ Server Actions
+
+Current Server Actions include
+
+- createNote()
+- updateNote()
+- deleteNote()
+- toggleFavorite()
+- archiveNote()
+
+---
+
+# 🔐 Authentication
+
+Authentication is powered by **Clerk**.
+
+Features include
+
+- Sign Up
+- Sign In
+- Session Handling
+- Protected Routes
+- User-based Data Isolation
+
+Every user can only access their own notes and workspaces.
+
+---
+
+# 💾 Database
+
+MongoDB stores
+
+- Users (via Clerk IDs)
+- Notes
+- Workspaces
+
+Each document is linked using
+
+```
+userId
+```
+
+ensuring complete isolation between users.
+
+---
+
+# 🎨 UI Highlights
+
+- Modern Dark Theme
+- Gradient Backgrounds
+- Premium Dashboard
+- SaaS Style Landing Page
+- Responsive Layout
+- Component Driven Design
+- Clean Typography
+- Smooth Hover Effects
+
+---
+
+# 📱 Responsive Design
+
+Optimized for
+
+- Desktop
+- Tablet
+- Mobile
+
+---
+
+# ⚡ Performance
+
+Built using
+
+- Server Components
+- Server Actions
+- Optimized Routing
+- Next.js App Router
+- Dynamic Rendering
+- Efficient Database Queries
+
+---
+
+# 🔧 Environment Variables
+
+Create a
+
+```
+.env.local
+```
+
+file
 
 ```env
 MONGODB_URI=
@@ -133,368 +356,125 @@ MONGODB_URI=
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 ```
 
 ---
 
-# Database Setup
+# 🚀 Running Locally
 
-### Step 1
-
-Create a MongoDB Atlas Cluster.
-
-### Step 2
-
-Create a database user.
-
-### Step 3
-
-Whitelist your IP address.
-
-### Step 4
-
-Copy the MongoDB connection string.
-
-### Step 5
-
-Paste it into:
-
-```env
-MONGODB_URI=
-```
-
-### Step 6
-
-Run the application.
-
-Mongoose automatically creates the required collections.
-
----
-
-# Installation
-
-Clone the repository.
+Clone the repository
 
 ```bash
-git clone https://github.com/Sulochan36/Jotvcanva.git
+git clone https://github.com/yourusername/jotcanva.git
 ```
 
-Move into the project.
-
-```bash
-cd jotcanva
-```
-
-Install dependencies.
+Install dependencies
 
 ```bash
 npm install
 ```
 
-Create environment variables.
+Configure environment variables
 
-```bash
-cp .env.example .env.local
+```
+.env.local
 ```
 
-Start development server.
+Start development server
 
 ```bash
 npm run dev
 ```
 
-Open:
+Visit
 
-```txt
+```
 http://localhost:3000
 ```
 
 ---
 
-# Routes Included
+# 💡 Why I Built This
 
-## Public Routes
+Most note applications either become cluttered very quickly or focus only on basic CRUD functionality.
 
-```txt
-/
-```
+The objective of JotCanva was to build something that feels closer to a real digital workspace rather than just a note storage application.
+Also to go through various features of NextJS Framework.
 
-Landing Page
+Instead of simply creating notes, users can:
 
-```txt
-/notes/[slug]
-```
+- Organize projects
+- Categorize information
+- Build structured knowledge
+- Navigate effortlessly between workspaces
+- Focus on writing in a distraction-free interface
 
-Shared Notes (if enabled)
-
-```txt
-/sign-in
-```
-
-User Login
-
-```txt
-/sign-up
-```
-
-User Registration
+The project also served as an opportunity to explore production-level architecture with the latest Next.js ecosystem while designing a polished user experience.
 
 ---
 
-## Protected Routes
+# 📚 What I Learned
 
-```txt
-/dashboard
-```
+During development I explored
 
-Dashboard Overview
-
-```txt
-/dashboard/notes
-```
-
-All Notes
-
-```txt
-/dashboard/notes/create
-```
-
-Create Note
-
-```txt
-/dashboard/notes/[noteId]
-```
-
-View Note
-
-```txt
-/dashboard/notes/[noteId]/edit
-```
-
-Edit Note
-
-```txt
-/dashboard/favorites
-```
-
-Favorite Notes
-
-```txt
-/dashboard/archive
-```
-
-Archived Notes
-
-```txt
-/dashboard/workspaces
-```
-
-All Workspaces
-
-```txt
-/dashboard/workspaces/[workspace]
-```
-
-Workspace Notes
-
-```txt
-/dashboard/tags/[tag]
-```
-
-Tag Notes
+- Next.js App Router
+- Server Components
+- Server Actions
+- Authentication using Clerk
+- MongoDB Schema Design
+- Mongoose
+- Dynamic Routing
+- Protected Layouts
+- Component Driven Architecture
+- Modern UI Design
+- Responsive Design
+- Dark Theme Design
+- Full Stack Application Architecture
 
 ---
 
-# API Routes
+# 🚧 Roadmap
 
-## Get All Notes
+The project is actively being improved.
 
-```http
-GET /api/notes
-```
+Upcoming improvements include
 
----
+JotCanva is actively being developed. Planned improvements include:
 
-## Create Note
-
-```http
-POST /api/notes
-```
-
----
-
-## Get Single Note
-
-```http
-GET /api/notes/[noteId]
-```
+- AI-powered note summarization
+- Semantic search across notes
+- Smart workspace organization
+- Rich text editor enhancements
+- Markdown support
+- Drag-and-drop organization
+- Version history
+- Improved typography and visual design system
+- Additional micro-interactions and motion
+- Collaborative workspaces
+- Mobile responsive refinements
+- Theme customization
 
 ---
 
-## Update Note
+# 🤝 Contributing
 
-```http
-PATCH /api/notes/[noteId]
-```
+Contributions, suggestions and feedback are always welcome.
 
----
-
-## Delete Note
-
-```http
-DELETE /api/notes/[noteId]
-```
+Feel free to open an Issue or submit a Pull Request.
 
 ---
 
-# Server Actions Used
 
-### createNote()
+# 👨‍💻 Author
 
-Creates a new note.
+**Sulochan Mahajan**
 
-### updateNote()
+If you enjoyed this project, consider giving it a ⭐ on GitHub.
 
-Updates an existing note.
-
-### deleteNote()
-
-Deletes a note.
-
-### toggleFavorite()
-
-Marks or removes note from favorites.
-
-### archiveNote()
-
-Archives or restores a note.
+It helps support the project and motivates future improvements.
 
 ---
 
-# Rendering Strategies Used
-
-## SSR (Server Side Rendering)
-
-Used for:
-
-* Dashboard
-* Notes Pages
-* Workspaces
-* Tags
-* Favorites
-* Archive
-
-Reason:
-
-User-specific authenticated data must always be fresh.
-
----
-
-## SSG (Static Site Generation)
-
-Used for:
-
-* Landing Page
-
-Reason:
-
-Content is mostly static and can be pre-rendered.
-
----
-
-## ISR (Incremental Static Regeneration)
-
-Not implemented in current version.
-
-Future scope may include public shared note pages.
-
----
-
-# Concepts Covered From Class
-
-### Next.js App Router
-
-* Route Groups
-* Dynamic Routes
-* Nested Routes
-
-### Server Components
-
-* Data Fetching
-* Database Queries
-
-### Server Actions
-
-* Form Handling
-* Database Mutations
-
-### Route Handlers
-
-* REST API Creation
-
-### Authentication
-
-* Clerk Integration
-* Protected Routes
-
-### Database
-
-* MongoDB
-* Mongoose Models
-
-### UI Development
-
-* Tailwind CSS
-* Responsive Design
-
-### State & Navigation
-
-* Dynamic Routing
-* Conditional Rendering
-
----
-
-# Assumptions
-
-* Every note belongs to a single authenticated user.
-* Workspaces are stored as strings.
-* Tags are stored as arrays of strings.
-* Notes are isolated between users.
-
----
-
-# Limitations
-
-* Rich Text Editor is not implemented.
-* File Uploads are not implemented.
-* Real-time Collaboration is not implemented.
-* Search functionality is not implemented.
-* Public Note Sharing is limited.
-* Theme customization is currently basic.
-
----
-
-# Future Improvements
-
-* Rich Text Editor
-* Markdown Support
-* Image Uploads
-* AI Note Assistant
-* Search and Filtering
-* Workspace Customization
-* Public Shared Notes
-* Export Notes as PDF
-* Real-time Collaboration
-
----
-
-# Author
-
-Built as part of the Next.js Cohort Project Submission.
-
-Developed using Next.js, Clerk, MongoDB, and Tailwind CSS.
+<p align="center">
+Made with ❤️ using Next.js, TypeScript, Clerk and MongoDB
+</p>
